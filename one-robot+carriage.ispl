@@ -33,8 +33,12 @@ Formulae
         AG (pos0 or pos1 or pos2);
         EG !pos2;
         EX pos2;
-        EF(pos1 and EX pos2);
-        EF E (pos0 U pos2);
-        EF E ((pos0 or pos1) U pos2);
+        EF (pos1 and EX pos2);
+        EF (pos0 and EX pos2);
+        --- How does U works? as the above line fails but the following line is true:
+        EF (E (pos0 U pos2));
+        --- But the next line is false:
+        EF A (pos0 U pos2);
+        EF ((pos0 or pos1) and EX pos2);
         AF (EX (EX pos2));
 end Formulae
