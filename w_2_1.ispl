@@ -1,0 +1,44 @@
+-- W_2_1 Vacuum world
+
+
+Agent VacuumCleaner
+  Vars:
+  inA: boolean;
+  inB: boolean;
+  cleanA: boolean;
+  cleanB: boolean;
+  end Vars
+  Actions = {nil, move, suck};
+  Protocol:
+    Other: {nil, move, suck};
+  end Protocol
+  Evolution:
+    inA=true and inB=false if inB=true and Action=move or inA=true and Action=nil;
+    inA=false and inB=true if inA=true and Action=move or inB=true and Action=nil;
+    cleanA=true if inA=true and Action=suck;
+    cleanB=true if inB=true and Action=suck;
+  end Evolution
+end Agent
+
+Evaluation
+  inA if VacuumCleaner.inA=true;
+  inB if VacuumCleaner.inB=true;
+  cleanA if VacuumCleaner.cleanA=true;
+  cleanB if VacuumCleaner.cleanB=true;
+end Evaluation
+
+InitStates
+  VacuumCleaner.inA=true and
+  VacuumCleaner.inB=false and
+  VacuumCleaner.cleanA=false and
+  VacuumCleaner.cleanB=false;
+end InitStates
+
+Formulae
+  EF inB;
+  EF cleanA;
+  EF (cleanA and cleanB);
+  cleanB;
+  AG inA;
+  AF inB;
+end Formulae

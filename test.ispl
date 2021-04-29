@@ -1,0 +1,27 @@
+
+
+Agent VacuumCleaner
+  Vars:
+  inA: boolean;
+  inB: boolean;
+  end Vars
+  Actions = {nil};
+  Protocol:
+    Other: {nil};
+  end Protocol
+  Evolution:
+    inA=true and inB=true if Action=nil;
+  end Evolution
+end Agent
+
+Evaluation
+  inA if VacuumCleaner.inA = true;
+end Evaluation
+
+InitStates
+  VacuumCleaner.inA = true and VacuumCleaner.inB = true;
+end InitStates
+
+Formulae
+  EF inA;
+end Formulae
