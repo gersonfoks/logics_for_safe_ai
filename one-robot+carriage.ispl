@@ -36,6 +36,8 @@ Formulae
         EF (pos1 and EX pos2);
         EF (pos0 and EX pos2);
         --- How does U works? as the above line fails but the following line is true:
+        E (pos0 U pos2);
+        -- This does not work because the present is regarded as the future.
         EF (E (pos0 U pos2));
         --- But the next line is false:
         EF A (pos0 U pos2);
