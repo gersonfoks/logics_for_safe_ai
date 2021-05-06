@@ -1,6 +1,5 @@
 -- W_2_1 Vacuum world
 
-
 Agent VacuumCleaner
   Vars:
   inA: boolean;
@@ -35,10 +34,11 @@ InitStates
 end InitStates
 
 Formulae
-  EF inB;
-  EF cleanA;
-  EF (cleanA and cleanB);
-  cleanB;
   AG inA;
+  inA and !inB and !cleanA and !cleanB;
+  inA -> EF inB;
+  inA -> EF cleanA;
+  EF (cleanA and cleanB);
   AF inB;
+  cleanB;
 end Formulae

@@ -31,14 +31,11 @@ Formulae
         EF pos2;
         A (pos0 U pos1);
         AG (pos0 or pos1 or pos2);
+        --- Our answers
         EG !pos2;
         EX pos2;
         EF (pos1 and EX pos2);
-        EF (pos0 and EX pos2);
-        --- How does U works? as the above line fails but the following line is true:
-        EF (E (pos0 U pos2));
-        --- But the next line is false:
-        EF A (pos0 U pos2);
-        EF ((pos0 or pos1) and EX pos2);
-        AF (EX (EX pos2));
+        E (pos0 U pos2);
+        E ((pos0 or pos1) U pos2);
+        AG (EX (EX pos1));
 end Formulae
