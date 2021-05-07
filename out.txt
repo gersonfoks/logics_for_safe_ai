@@ -1,0 +1,151 @@
+************************************************************************
+                       MCMAS v1.1.0 
+
+ This software comes with ABSOLUTELY NO WARRANTY, to the extent
+ permitted by applicable law. 
+
+ Please check http://vas.doc.ic.ac.uk/tools/mcmas/ for the latest release.
+ Please send any feedback to <mcmas@imperial.ac.uk>
+************************************************************************
+
+Command line: ./mcmas -c 1 ./logics_for_safe_ai/w_2_1.ispl
+
+./logics_for_safe_ai/w_2_1.ispl has been parsed successfully.
+Global syntax checking...
+Done
+Encoding BDD parameters...
+Building partial transition relation...
+Building BDD for initial states...
+Building reachable state space...
+Checking formulae...
+Verifying properties...
+  Formula number 1: (AG inA), is FALSE in the model
+  The following is a counterexample for the formula: 
+   < 0 1 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = false
+  inB = true
+----------------------------------------
+  Formula number 2: (((inA && (! inB)) && (! cleanA)) && (! cleanB)), is TRUE in the model
+    -- Sorry it is not possible to compute witnesses for non-ECTLK formulae
+  Formula number 3: (inA -> (EF inB)), is TRUE in the model
+  The following is a witness for the formula: 
+   < 0 1 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = false
+  inB = true
+----------------------------------------
+  Formula number 4: (inA -> (EF cleanA)), is TRUE in the model
+  The following is a witness for the formula: 
+   < 0 1 2 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 2 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = true
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+  Formula number 5: (EF (cleanA && cleanB)), is TRUE in the model
+  The following is a witness for the formula: 
+   < 0 1 2 3 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = true
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+------------- State: 2 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = true
+  cleanB = false
+  inA = false
+  inB = true
+----------------------------------------
+------------- State: 3 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = true
+  cleanB = true
+  inA = false
+  inB = true
+----------------------------------------
+  Formula number 6: (AF inB), is FALSE in the model
+  The following is a counterexample for the formula: 
+   < 0 0 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------
+  Formula number 7: cleanB, is FALSE in the model
+  The following is a counterexample for the formula: 
+   < 0 > 
+  States description: 
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+  cleanA = false
+  cleanB = false
+  inA = true
+  inB = false
+----------------------------------------

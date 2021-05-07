@@ -1,4 +1,44 @@
-CounterExample W2-2
+W2-1 Extracted witness and counterexample:
+
+Formula number 5: (EF (cleanA && cleanB)), is TRUE in the model
+The following is a witness for the formula:
+ < 0 1 2 3 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = false
+cleanB = false
+inA = true
+inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = true
+cleanB = false
+inA = true
+inB = false
+----------------------------------------
+------------- State: 2 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = true
+cleanB = false
+inA = false
+inB = true
+----------------------------------------
+------------- State: 3 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = true
+cleanB = true
+inA = false
+inB = true
+----------------------------------------
+
+
+
 Formula number 1: (AG inA), is FALSE in the model
 The following is a counterexample for the formula:
  < 0 1 >
@@ -19,7 +59,8 @@ cleanB = false
 inA = false
 inB = true
 
-CounterExample W2-3
+witnesses and counterexamples: W2-2
+
 Formula number 4: (EG (! pos2)), is TRUE in the model
 The following is a witness for the formula:
  < 0 0 >
