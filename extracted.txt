@@ -1,0 +1,95 @@
+CounterExample W2-2
+Formula number 1: (AG inA), is FALSE in the model
+The following is a counterexample for the formula:
+ < 0 1 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = false
+cleanB = false
+inA = true
+inB = false
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent VacuumCleaner
+cleanA = false
+cleanB = false
+inA = false
+inB = true
+
+CounterExample W2-3
+Formula number 4: (EG (! pos2)), is TRUE in the model
+The following is a witness for the formula:
+ < 0 0 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+Formula number 5: (EX pos2), is FALSE in the model
+The following is a counterexample for the formula:
+ < 0 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+Formula number 6: (EF (pos1 && (EX pos2))), is TRUE in the model
+The following is a witness for the formula:
+ < 0 1 2 >
+ < 2 3 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+------------- State: 2 -----------------
+Agent Environment
+Agent Robot1
+pos = pos1
+----------------------------------------
+------------- State: 3 -----------------
+Agent Environment
+Agent Robot1
+pos = pos2
+----------------------------------------
+Formula number 7: E(pos0 U pos2), is FALSE in the model
+The following is a counterexample for the formula:
+ < 0 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+Formula number 8: E((pos0 || pos1) U pos2), is TRUE in the model
+The following is a witness for the formula:
+ < 0 1 2 >
+States description:
+------------- State: 0 -----------------
+Agent Environment
+Agent Robot1
+pos = pos0
+----------------------------------------
+------------- State: 1 -----------------
+Agent Environment
+Agent Robot1
+pos = pos1
+----------------------------------------
+------------- State: 2 -----------------
+Agent Environment
+Agent Robot1
+pos = pos2
+----------------------------------------
+Formula number 9: (AG (EX (EX pos1))), is TRUE in the model
+  -- Sorry it is not possible to compute witnesses for non-ECTLK formulae
