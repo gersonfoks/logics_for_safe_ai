@@ -1,0 +1,90 @@
+Agent Environment
+  Vars:
+    pos0: boolean;
+    pos1: boolean;
+    pos2: boolean;
+  end Vars
+
+  Actions = {moveClockwise, moveCounterClockwise, nil};
+  Protocol:
+    pos0=true or pos1=true or pos2=true: {moveClockwise, moveCounterClockwise, nil};
+  end Protocol
+  Evolution:
+    pos0=true if pos0 = true and Robot1.Action = nil and Robot2.Action = nil;
+    pos1=true if pos1 = true and Robot1.Action = nil and Robot2.Action = nil;
+    pos2=true if pos2 = true and Robot1.Action = nil and Robot2.Action = nil;
+
+    pos0=false and pos1=true if pos0 = true and Robot1.Action = pushClockwise and Robot2.Action = nil;
+    pos1=false and pos2=true if pos1 = true and Robot1.Action = pushClockwise and Robot2.Action = nil;
+    pos2=false and pos0=true if pos2 = true and Robot1.Action = pushClockwise and Robot2.Action = nil;
+
+
+    pos1=false and pos0=true if pos1 = true and Robot2.Action = pushCounterClockwise and Robot1.Action = nil;
+    pos2=false and pos1=true if pos2 = true and Robot2.Action = pushCounterClockwise and Robot1.Action = nil;
+    pos0=false and pos2=true if pos0 = true and Robot2.Action = pushCounterClockwise and Robot1.Action = nil;
+  end Evolution
+end Agent
+
+Agent Robot1
+  Lobsvars = {pos1};
+  Vars:
+    pos1: boolean;
+  end Vars
+  Actions = {pushClockwise, nil};
+  Protocol:
+     pos1=true or pos1=false: {pushClockwise, nil};
+  end Protocol
+  Evolution:
+    pos1=true if Environment.pos1=true;
+    pos1=false if Environment.pos1=false;
+  end Evolution
+end Agent
+
+Agent Robot2
+  Lobsvars = {pos2};
+  Vars:
+    pos2: boolean;
+  end Vars
+  Actions = {pushCounterClockwise, nil};
+  Protocol:
+     pos2=true or pos2=false: { pushCounterClockwise, nil};
+  end Protocol
+  Evolution:
+    pos2=true if Environment.pos2=true;
+    pos2=false if Environment.pos2=false;
+  end Evolution
+end Agent
+
+
+
+Evaluation
+        pos0 if Environment.pos0  = true;
+        pos1 if Environment.pos1  = true;
+        pos2 if Environment.pos2  = true;
+end Evaluation
+
+
+
+InitStates
+        Environment.pos0 = true and
+        Environment.pos1 = false and
+        Environment.pos2 = false and
+        Robot1.pos1 = false;
+end InitStates
+
+Groups
+  g = {Robot1, Robot2};
+end Groups
+
+Formulae
+  pos2 -> !K(Robot1, pos2);
+  pos2 -> K(Robot1, !pos1);
+  pos2 -> K(Robot2, K(Robot1, pos1));
+  pos2 -> DK(g, pos2);
+  pos2 -> !GK(g, pos2);
+  pos2 -> GK(g, !pos1);
+  pos2 -> !GCK(g, pos2);
+  pos2 -> !GCK(g, !pos2);
+  AG GCK(g, (pos0 or pos1 or pos2));
+  EF GK(g, !pos1);
+end Formulae
