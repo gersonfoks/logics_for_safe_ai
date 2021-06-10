@@ -1,0 +1,60 @@
+
+
+Agent Guard
+  Vars:
+    pos: {room0, room1, room2};
+    moving_right: boolean;
+  end Vars
+  Actions = {left, right};
+  Protocol:
+     pos=room0 or  pos=room1: {right};
+     pos=room1 or  pos=room2: {left};
+  end Protocol
+  Evolution:
+    pos=room0 if pos=room1  and Guard.Action=left;
+    pos=room1 if ( pos=room0  and Guard.Action=right) or ( pos=room0  and Guard.Action=left);
+    pos=room2 if pos=room1  and Guard.Action=right;
+  end Evolution
+end Agent
+
+
+Agent Thief
+  Vars:
+    pos: {room0, room1, room2};
+    moving_right: boolean;
+    stole_painting: boolean;
+    escaped: boolean;
+    caught: boolean;
+  end Vars
+  Actions = {left, right, wait, steal, exit };
+  Protocol:
+     pos=room0 or  pos=room1: {right, wait};
+     pos=room1 or  pos=room2: {left, wait};
+     pos=room2: {steal, exit};
+  end Protocol
+  Evolution:
+    pos=room0 if pos=room1  and Thief.Action=left;
+    pos=room1 if ( pos=room0  and Thief.Action=right) or ( pos=room0  and Guard.Action=left);
+    pos=room2 if pos=room1  and Thief.Action=right;
+    pos=room2 and stole_painting = true if pos=room2 and Thief.Action=steal;
+    escaped = true if pos=room2 and Thief.Action=exit and stole_painting=true;
+    caught = true if stole_painting=true and (Thief.pos = room0 and Guard.pos = room0) or (Thief.pos = room1 and Guard.pos = room1)  or (Thief.pos = room2 and Guard.pos = room2)  ;
+  end Evolution
+end Agent
+
+
+Evaluation
+    escaped if Thief.escaped = true;
+    caught if Thief.caught = true;
+    stole_painting if Thief.stole_painting = true;
+end Evaluation
+
+
+
+InitStates
+        Thief.pos = room0 and
+        Guard.pos = room0 and
+        Thief.escaped = false and
+        Thief.caught = false and
+        Thief.stole_painting = false;
+end InitStates
