@@ -1,0 +1,90 @@
+Agent Environment
+  Vars:
+    state: {q0, q1, q2};
+
+    win1: boolean;
+    win2: boolean;
+    draw: boolean;
+  end Vars
+  Actions = {nil};
+  Protocol:
+    state=q0 or state=q1 or state=q2: {nil};
+  end Protocol
+  Evolution:
+
+    state = q1 and win1 = true and win2 = false if Player1.Action =  rock and Player2.Action = scissors;
+    state = q1  and win1 = true and win2 = false if Player1.Action =  paper and Player2.Action = rock;
+    state = q1  and win1 = true and win2 = false if Player1.Action =  scissors and Player2.Action = paper;
+
+    state = q2  and win2 = true and win1 = false  if Player2.Action =  rock and Player1.Action = scissors;
+    state = q2  and win2 = true and win1 = false if Player2.Action =  paper and Player1.Action = rock;
+    state = q2  and win2 = true and win1 = false if Player2.Action =  scissors and Player1.Action = paper;
+
+    state = q0 and win1 = false and win2 = false if Player1.Action = rock and Player2.Action = rock;
+    state = q0 and win1 = false and win2 = false if Player1.Action = paper and Player2.Action = paper;
+    state = q0 and win1 = false and win2 = false if Player1.Action = scissors and Player2.Action = scissors;
+
+  end Evolution
+end Agent
+
+
+Agent Player1
+  Lobsvars = {state};
+  Vars:
+    misc: boolean;
+    next_action: {next_rock, next_paper, next_scissors};
+  end Vars
+  Actions = {rock, paper, scissors};
+  Protocol:
+    next_action=next_rock : {rock};
+    next_action=next_paper : {paper};
+    next_action=next_scissors : {scissors};
+  end Protocol
+  Evolution:
+    next_action = next_rock if Player1.Action  = scissors;
+    next_action = next_paper if Player1.Action  = rock;
+    next_action = next_scissors if Player1.Action  = paper;
+  end Evolution
+end Agent
+
+Agent Player2
+  Lobsvars = {state};
+  Vars:
+    misc: boolean;
+  end Vars
+  Actions = {rock, paper, scissors};
+  Protocol:
+    Environment.state = q0 or Environment.state = q1 or Environment.state = q2 : {rock, paper, scissors};
+  end Protocol
+  Evolution:
+    misc = true if Player2.Action = rock;
+  end Evolution
+end Agent
+
+
+Evaluation
+        win1 if Environment.win1  = true;
+        win2 if Environment.win2  = true;
+        draw if Environment.draw  = true;
+end Evaluation
+
+InitStates
+        Environment.win1 = false and
+        Environment.win2 = false and
+        Environment.draw = false and
+        Environment.state = q0;
+end InitStates
+
+Groups
+  g1 = {Player1};
+  g2 = {Player2};
+  g_all = {Player1, Player2};
+end Groups
+
+
+Formulae
+  <g2> X win2;
+  <g2> F win1;
+  !<g1> X win1;
+  <g_all> F win1;
+end Formulae
