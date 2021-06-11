@@ -1,3 +1,4 @@
+Semantics=SingleAssignment;
 
 Agent Environment
   Vars:
@@ -10,9 +11,7 @@ Agent Environment
     at_least_one=true or at_least_one=false: {nil};
   end Protocol
   Evolution:
-    at_least_one =true and win1 = true if Player1.Action = play_one or Player2.Action = play_one;
-    game_end = true if Player1.Action = play_one or Player1.Action = play_zero;
-
+    at_least_one =true if Player1.Action = play_one or Player2.Action = play_one;
   end Evolution
 end Agent
 
@@ -49,7 +48,7 @@ Agent Player2
 end Agent
 
 Evaluation
-        win1 if Environment.win1 = true;
+        win1 if Environment.at_least_one = true and  Player1.played_action = play_one or (Environment.at_least_one = false and  Player1.played_action = play_zero) ;
         win2 if Environment.at_least_one = true and  Player2.played_action = play_one or (Environment.at_least_one = false and  Player2.played_action = play_zero) ;
         at_least_one if Environment.at_least_one = true;
 end Evaluation
@@ -73,6 +72,6 @@ end Groups
 Formulae
   <g_all> F win2;
   <g_all> F ! win2;
-  <g2> F ! win1;
+  <g2> X <g2> F ! win1;
 
 end Formulae

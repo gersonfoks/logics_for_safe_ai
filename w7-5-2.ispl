@@ -1,3 +1,4 @@
+Semantics=SingleAssignment;
 
 Agent Environment
   Vars:
@@ -89,6 +90,5 @@ end Groups
 Formulae
   <g_all> F win2;
   <g_all> F ! win2;
-  <g1> G ! win3;
-
+  <g1> X <g1> G win3;
 end Formulae

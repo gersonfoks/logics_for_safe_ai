@@ -82,6 +82,7 @@ end Groups
 
 
 Formulae
+  <g2> X <g2> G win2;
   <g2> X win2;
   <g2> F win1;
   !<g1> X win1;

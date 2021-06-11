@@ -1,65 +1,84 @@
+Semantics=SingleAssignment;
+Agent Environment
+  Vars:
+    pos_guard: {room0, room1, room2};
+    pos_thief: {room0, room1, room2};
+    stole_painting: boolean;
+    caught: boolean;
+    escaped: boolean;
+  end Vars
+  Actions = {nil};
+  Protocol:
+    caught=true or caught=false: {nil};
+  end Protocol
+  Evolution:
+    pos_guard=room0 if pos_guard=room1  and Guard.Action=left;
+
+    pos_guard=room1 if ( pos_guard=room0  and Guard.Action=right) or ( pos_guard=room2  and Guard.Action=left);
+    pos_guard=room2 if pos_guard=room1  and Guard.Action=right;
+
+
+
+    pos_thief=room0 if (pos_thief=room1  and Thief.Action=left) or (pos_thief=room0 and Thief.Action=wait);
+    pos_thief=room1 if ( pos_thief=room0  and Thief.Action=right) or ( pos_thief=room2  and Thief.Action=left) or (pos_thief=room1 and Thief.Action=wait);
+    pos_thief=room2 if (pos_thief=room1  and Thief.Action=right) or (pos_thief=room2 and Thief.Action=wait);
+    stole_painting = true if pos_thief=room2 and Thief.Action=steal and stole_painting=false;
+    pos_thief=room2 if pos_thief=room2 and Thief.Action=steal and stole_painting=false;
+    escaped = true if pos_thief=room2 and Thief.Action=exit and stole_painting=true;
+
+  end Evolution
+end Agent
 
 
 Agent Guard
+  Lobsvars = {pos_guard};
   Vars:
-    pos: {room0, room1, room2};
     moving_right: boolean;
   end Vars
   Actions = {left, right};
   Protocol:
-     (pos=room0 or  pos=room1) and moving_right=true: {right};
-     (pos=room1 or  pos=room2) and moving_right = false: {left};
+     (Environment.pos_guard=room0 or  Environment.pos_guard=room1) and moving_right=true: {right};
+     (Environment.pos_guard=room1 or  Environment.pos_guard=room2) and moving_right = false: {left};
   end Protocol
   Evolution:
-    pos=room0 if pos=room1  and Guard.Action=left;
-    moving_right=true if pos=room1  and Guard.Action=left;
-    pos=room1 if ( pos=room0  and Guard.Action=right) or ( pos=room2  and Guard.Action=left);
-    pos=room2 if pos=room1  and Guard.Action=right;
-    moving_right=false if pos=room1  and Guard.Action=right;
-
+    moving_right=true if Environment.pos_guard=room1  and Guard.Action=left;
+    moving_right=false if Environment.pos_guard=room1  and Guard.Action=right;
   end Evolution
 end Agent
 
 
 Agent Thief
+  Lobsvars = {pos_thief, stole_painting, escaped, caught, pos_guard};
   Vars:
-    pos: {room0, room1, room2};
-    stole_painting: boolean;
-
-    escaped: boolean;
+    misc: boolean;
   end Vars
   Actions = {left, right, wait, steal, exit };
   Protocol:
-     pos=room0 or  pos=room1: {right, wait};
-     pos=room1 or  pos=room2: {left, wait};
-     pos=room2 : { exit, wait};
-     pos=room2 and can_not_steal=false : {steal};
+     Environment.pos_thief=room0 or  Environment.pos_thief=room1: {right, wait};
+     Environment.pos_thief=room1 or  Environment.pos_thief=room2: {left, wait};
+     Environment.pos_thief=room2 : { exit, wait};
+     Environment.pos_thief = room2 and (Environment.pos_guard = room0 or Environment.pos_guard = room1 ) and Environment.stole_painting=false : {steal};
   end Protocol
   Evolution:
-    pos=room0 if (pos=room1  and Thief.Action=left) or (pos=room0 and Thief.Action=wait);
-    pos=room1 if ( pos=room0  and Thief.Action=right) or ( pos=room2  and Thief.Action=left) or (pos=room1 and Thief.Action=wait);
-    pos=room2 if (pos=room1  and Thief.Action=right) or (pos=room2 and Thief.Action=wait);
-
-    stole_painting = true if pos=room2 and Thief.Action=steal and stole_painting=false;
-    pos=room2 if pos=room2 and Thief.Action=steal and stole_painting=false;
-    escaped = true if pos=room2 and Thief.Action=exit and stole_painting=true;
+    misc=true if Environment.pos_thief=room0;
   end Evolution
 end Agent
 
 
 Evaluation
-    escaped if Thief.escaped=true;
-    caught if Thief.pos=Guard.pos and Thief.stole_painting = true;
-    stolen if Thief.stole_painting=true;
-    can_not_steal if Guard.pos = Thief.pos;
+    escaped if Environment.escaped=true;
+    caught if Environment.pos_thief=Environment.pos_guard and Environment.stole_painting = true;
+    stolen if Environment.stole_painting=true;
 end Evaluation
 
 InitStates
-        Thief.pos = room0 and
-        Guard.pos = room0 and
         Guard.moving_right = true and
-        Thief.escaped = false and
-        Thief.stole_painting = false;
+        Thief.misc = true and
+        Environment.pos_thief = room0 and
+        Environment.pos_guard = room0 and
+        Environment.escaped = false and
+        Environment.stole_painting = false and
+        Environment.caught = false;
 end InitStates
 
 Groups

@@ -1,18 +1,60 @@
 -- State 0 --
   Agent Environment
-    at_least_one=false
-    game_end=false
-  Agent Player1
-    played_action=none
-  Agent Player2
-    played_action=none
+    caught=false
+    escaped=false
+    pos_guard=room0
+    pos_thief=room0
+    stole_painting=false
+  Agent Guard
+    moving_right=true
+  Agent Thief
+    misc=true
 
 -- State 1 --
   Agent Environment
-    at_least_one=true
-    game_end=false
-  Agent Player1
-    played_action=play_zero
-  Agent Player2
-    played_action=play_one
+    caught=false
+    escaped=false
+    pos_guard=room1
+    pos_thief=room1
+    stole_painting=false
+  Agent Guard
+    moving_right=true
+  Agent Thief
+    misc=true
+
+-- State 2 --
+  Agent Environment
+    caught=false
+    escaped=false
+    pos_guard=room2
+    pos_thief=room2
+    stole_painting=false
+  Agent Guard
+    moving_right=false
+  Agent Thief
+    misc=true
+
+-- State 3 --
+  Agent Environment
+    caught=false
+    escaped=false
+    pos_guard=room1
+    pos_thief=room2
+    stole_painting=false
+  Agent Guard
+    moving_right=false
+  Agent Thief
+    misc=true
+
+-- State 4 --
+  Agent Environment
+    caught=false
+    escaped=false
+    pos_guard=room0
+    pos_thief=room2
+    stole_painting=false
+  Agent Guard
+    moving_right=true
+  Agent Thief
+    misc=true
 
