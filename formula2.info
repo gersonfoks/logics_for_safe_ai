@@ -1,0 +1,10 @@
+-- State 0 --
+  Agent Environment
+  Agent Guard
+    moving_right=true
+    pos=room0
+  Agent Thief
+    escaped=false
+    pos=room0
+    stole_painting=false
+
