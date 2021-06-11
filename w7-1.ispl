@@ -1,7 +1,6 @@
 Agent Environment
   Vars:
     state: {q0, q1, q2};
-
     win1: boolean;
     win2: boolean;
     draw: boolean;
